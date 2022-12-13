@@ -1,0 +1,209 @@
+{% extends 'base.html' %}
+
+{% block root %}
+
+<section style="background-color: #eee;">
+    <div class="container py-5">
+      <div class="row">
+        <div class="col">
+          <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+            <ol class="breadcrumb mb-0">
+              <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+              <!-- <li class="breadcrumb-item"><a href="#"></a></li> -->
+              <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-2">
+          <div class="card mb-2">
+            <div class="card-body text-center">
+              <img src="{{profile.profile.url}}" alt="Profile"
+                class="rounded-circle img-fluid" style="width: 150px;">
+              <h5 class="my-3"> {{profile.name}} </h5>
+              <p class="text-muted mb-1">{{user.username}}</p>
+              <p class="text-muted mb-4">{{profile.address}}</p>
+              <div class="d-flex justify-content-center mb-2">
+                <!-- <button type="button" class="btn btn-primary">Follow</button> -->
+                <!-- <button type="button" class="btn btn-outline-primary ms-1">Message</button> -->
+              </div>
+            </div>
+          </div>
+          <!-- <div class="card mb-4 mb-lg-0">
+            <div class="card-body p-0">
+              <ul class="list-group list-group-flush rounded-3">
+                <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                    <i class="fas fa-globe fa-lg text-warning"></i>
+                    <a href="{{profile.created}}">
+
+                    <p class="mb-0">{{profile.social_media | slice:30}}....</p>
+                
+                </a>  
+                </li>
+                
+              </ul>
+            </div>
+          </div> -->
+        </div>
+        <div class="col-lg-10">
+          <div class="card mb-6">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Full Name</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{profile.name}} </p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Email</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{profile.email}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Phone</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{profile.phone}}</p>
+                </div>
+              </div>
+              
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Address</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{profile.address}}</p>
+                </div>
+              </div>
+              <hr> 
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Roll</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0" style="text-transform:capitalize;" ><b>{% if profile.roll == '0' %}Insurer{% else %}Provider{% endif %}</b></p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="row">
+            
+            <div class="additional-details my-5 text-center">
+                <!-- Nav pills -->
+                <ul class="nav nav-tabs justify-content-center">
+                    <li class="nav-tabs">
+                        <a class="nav-link active" data-toggle="tab" data-bs-toggle="tab" href="#home">Inversted</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" data-bs-toggle="tab" href="#menu1">Climed Insurance</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" data-bs-toggle="tab" href="#menu2">Specifications</a>
+                    </li> -->
+                </ul>
+        
+                <!-- Tab panes -->
+                <div class="tab-content mt-4 mb-3">
+                    <div class="tab-pane container active" id="home">
+                        <div class="description">
+                            <table class="table">
+                                <thead class="thead table-success">
+                                  <tr>
+                                    <th scope="col">Insurance Policy</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Adhar</th>
+                                    <th scope="col"><small>Amount Paid</small></th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Last Paid</th>
+                                    <th scope="col">Option</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {% for i in account %}
+                                  {% if user == i.user %}
+                                  <td>{{i.insure.policy}}</td>
+                                  <td>{{i.insure.name}}</td>
+                                  <td>{{i.insure.adhar}}</td>
+                                  <td><sup><b>{{i.amt_paid}}</b></sup><sub>{{i.total_amt}}</sub></td>
+                                  <td>{% if i.insure.status == '0' %}Not Allotted{% elif i.insure.status == '1' %}Pennding{%else%}Allocated{%endif%}</td>
+                                  <td><sup><b>{{i.update.date}}</b></sup><sub>{{i.duedate}}</sub></td>
+                                  <td>
+                                      <style>
+                                          #btn:hover{
+                                              color: white !important;
+                                          }
+                                      </style>
+                                      <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                                          {% if i.insure.done != True %}
+                                       <a id="btn" class="btn btn-outline-success" href="{% url 'insure_pay' i.insure.id %}">Pay Now</a>
+                                       {% endif %}
+                                       {% if i.insure.status == '0' and i.insure.done == True %}
+                                       <a id = "btn" aria-disabled="true" class="btn btn-outline-danger" href="{% url 'clime'%}">Clime</a>
+                                       {% else %}
+                                       <a id = "btn" aria-disabled="true" class="btn btn-outline-danger" >Amount Transferred</a>
+                                       {% endif %}
+                                      </div>
+                                  </td>
+
+                                  
+                            {% endif %} 
+                            {% endfor %}
+                                    </tbody>
+                              </table>
+                              
+                        </div>
+                    </div>
+                    <div class="tab-pane container fade" id="menu1">
+                        <div class="review">
+                          
+                          <table class="table">
+                            <thead class="table-success">
+                              <tr>
+                                <th scope="col">Clime ID</th>
+                                <th scope="col">Policy</th>
+                                <th scope="col">Amount Paided</th>
+                                <th scope="col">Climed</th>
+                                <th scope="col">Status</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {% for i in clime %}
+                              <tr>
+                                <td>{{i.id}}</td>
+                                <td>{{i.insure.policy}}</td>
+                                <td>{{i.insure.amt_paid}}</td>
+                                <td>{{i.insure.climed_amt}}</td>
+
+                                <td>{% if i.insure.status == '0' %}Not Allotted{% elif i.insure.status == '1' %}Pennding{%else%}Allocated{%endif%}</td>
+                              </tr>
+                              {% endfor %}
+                            </tbody>
+                          </table>
+                          
+                        </div>
+                    </div>
+                    <div class="tab-pane container fade" id="menu2">
+                        <div class="specification">
+                            <p>PUT SPECIFICATIONS HERE</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

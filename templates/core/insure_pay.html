@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block root %}
+
+<br>
+
+<div class="container">
+
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="mb-3">
+            <input type="text" disabled class="form-control" name="to_acc" value="{{to_acc}}" required>
+          </div>
+        
+        <div class="mb-3">
+            <input type="text" class="form-control" name="acc" value="{{profile.account}}" placeholder="XDC Account Number" required>
+          </div>
+          
+        <div class="mb-3">
+            <input type="password" class="form-control" value="{{profile.private_key}}" name="pk" placeholder="Private Key" required>
+          </div>
+    
+          <div class="btn-group" style="width: 100%;" role="group" aria-label="Basic mixed styles example">
+            <button type="submit" style="width: 60%;" class="btn btn-success" >Pay</button>
+            <button type="reset" style="width: 40%;" class="btn btn-danger" >Clear</button>
+            
+          </div>
+    </form>
+</div>
+   
+
+{% endblock %}

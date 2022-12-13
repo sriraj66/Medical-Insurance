@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block root %}
+<br>
+<div class="container">
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="md-3">
+            <input type="text" disabled class="form-control" value="{{insure}}" >
+        </div>
+        
+        <div class="md-3">
+            <label for="">Clime Form <small>(Writen In Hand with Signature)</small></label>
+            <input type="file" name="cf" class="form-control" >
+        </div>
+        
+        <div class="md-3">
+            <label for="">PAN Card</label>
+            <input type="file" name="pan" class="form-control" >
+        </div>
+        
+        <div class="md-3">
+            <label for="">Photo Copy</label>
+            <input type="file" name="photo" class="form-control" >
+        </div>
+        
+        <div class="md-3">
+            <label for="">Adhar Card</label>
+            <input type="file" name="adhar" class="form-control" >
+        </div>
+        
+        <div class="md-3">
+            <label for="">Reason For Climing</label>
+            <textarea type="file" name="reson" row="3" class="form-control" ></textarea>
+        </div>
+        
+        <div class="md-3">
+            <label for="">Birth Certificate</label>
+            <input type="file" name = 'bc' class="form-control" >
+        </div>
+        <div class="btn-group" style="width: 100%;" role="group" aria-label="Basic mixed styles example">
+            <button type="submit" style="width: 60%;" class="btn btn-success" >Apply</button>
+            <button type="reset" style="width: 40%;" class="btn btn-danger" >Clear</button>
+            
+        </div>
+    </form>
+
+</div>   
+
+{% endblock %}
